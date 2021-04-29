@@ -1,3 +1,5 @@
+#!/bin/bash
+
 serverUrl='http://127.0.0.1:4444'
 CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
 SELENIUM_STANDALONE_VERSION=3.6.0

@@ -1,6 +1,9 @@
 #!/bin/bash
+#https://github.com/vvo/selenium-standalone#install--run
 
-apt-get install -y --no-install-recommends xvfb xauth
+apt-get install -y --no-install-recommends xvfb xauth default-jre
+
+echo '-- chromedriver --'
 
 serverUrl='http://127.0.0.1:4444'
 CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
@@ -14,8 +17,21 @@ mv -f ~/chromedriver /usr/local/bin/chromedriver
 chown root:root /usr/local/bin/chromedriver
 chmod 0755 /usr/local/bin/chromedriver
 
+
+echo '-- selenium-server-standalone --'
+
 if [ ! -f $HOME/selenium-server-standalone.jar ]; then wget -N http://selenium-release.storage.googleapis.com/$SELENIUM_SUBDIR/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar -q -O $HOME/selenium-server-standalone.jar; fi
 chmod 0755 $HOME/selenium-server-standalone.jar
+
+echo '-- xvfb version: '
+xvfb -v
+echo '-- xauth version: '
+xauth -v
+echo '-- chromedriver version: '
+/usr/local/bin/chromedriver -v
+echo '-- java version: '
+java -version
+
 
 xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar $HOME/selenium-server-standalone.jar -debug > /tmp/selenium.log &
 wget --retry-connrefused --tries=60 --waitretry=1 --output-file=/dev/null $serverUrl/wd/hub/status -O /dev/null

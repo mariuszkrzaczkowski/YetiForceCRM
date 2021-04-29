@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get install -y --no-install-recommends xvfb
+apt-get install -y --no-install-recommends xvfb xauth
 
 serverUrl='http://127.0.0.1:4444'
 CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`

@@ -8,12 +8,12 @@ HOME=/var/www/
 
 if [ ! -f $HOME/chromedriver_linux64.zip ]; then wget -N http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -O $HOME/chromedriver_linux64.zip; fi
 unzip $HOME/chromedriver_linux64.zip -d ~/
-sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
-sudo chown root:root /usr/local/bin/chromedriver
-sudo chmod 0755 /usr/local/bin/chromedriver
+mv -f ~/chromedriver /usr/local/bin/chromedriver
+chown root:root /usr/local/bin/chromedriver
+chmod 0755 /usr/local/bin/chromedriver
 
 if [ ! -f $HOME/selenium-server-standalone.jar ]; then wget -N http://selenium-release.storage.googleapis.com/$SELENIUM_SUBDIR/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar -O $HOME/selenium-server-standalone.jar; fi
-sudo chmod 0755 $HOME/selenium-server-standalone.jar
+chmod 0755 $HOME/selenium-server-standalone.jar
 
 xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar $HOME/selenium-server-standalone.jar -debug > /tmp/selenium.log &
 wget --retry-connrefused --tries=60 --waitretry=1 --output-file=/dev/null $serverUrl/wd/hub/status -O /dev/null

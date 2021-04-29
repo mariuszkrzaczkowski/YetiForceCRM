@@ -23,16 +23,6 @@ echo '-- selenium-server-standalone --'
 if [ ! -f $HOME/selenium-server-standalone.jar ]; then wget -N http://selenium-release.storage.googleapis.com/$SELENIUM_SUBDIR/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar -q -O $HOME/selenium-server-standalone.jar; fi
 chmod 0755 $HOME/selenium-server-standalone.jar
 
-echo '-- xvfb version: '
-xvfb -v
-echo '-- xauth version: '
-xauth -v
-echo '-- chromedriver version: '
-/usr/local/bin/chromedriver -v
-echo '-- java version: '
-java -version
-
-
 xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar $HOME/selenium-server-standalone.jar -debug > /tmp/selenium.log &
 wget --retry-connrefused --tries=60 --waitretry=1 --output-file=/dev/null $serverUrl/wd/hub/status -O /dev/null
 if [ ! $? -eq 0 ]; then
@@ -40,3 +30,19 @@ if [ ! $? -eq 0 ]; then
 else
     echo "Finished setup"
 fi
+
+echo "wget http://localhost:4444/status"
+page="$(wget -O - http://localhost:4444/status)"
+echo "$page"
+
+echo "wget http://localhost:4444/wd/hub/status"
+page="$(wget -O - http://localhost:4444/wd/hub/statuss)"
+echo "$page"
+
+echo "wget http://localhost:13234/status"
+page="$(wget -O - http://localhost:13234/status)"
+echo "$page"
+
+echo "wget http://localhost:13234/wd/hub/status"
+page="$(wget -O - http://localhost:13234/wd/hub/status)"
+echo "$page"

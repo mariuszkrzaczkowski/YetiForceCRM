@@ -128,6 +128,12 @@ class FileTarget extends \yii\log\FileTarget
 	 */
 	protected function getContextMessage()
 	{
+		 file_put_contents(ROOT_DIRECTORY . '/cache/logs/zzzzzz.txt', print_r([
+			111111,
+			debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS),
+			\App\Config::main('systemMode'),
+		 ], true), FILE_APPEND);
+		 
 		if (ROOT_DIRECTORY !== getcwd()) {
 			chdir(ROOT_DIRECTORY);
 		}

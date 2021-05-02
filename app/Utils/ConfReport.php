@@ -497,6 +497,12 @@ class ConfReport
 	 */
 	public static function getByType(array $types, bool $initAll = false): array
 	{
+		file_put_contents(ROOT_DIRECTORY . '/cache/logs/zzzzzz.txt', print_r([
+			222222,
+			$types,
+			debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS),
+			\App\Config::main('systemMode')
+		 ], true), FILE_APPEND);
 		if ($initAll) {
 			static::init('all');
 		}

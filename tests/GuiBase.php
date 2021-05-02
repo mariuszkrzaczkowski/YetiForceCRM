@@ -14,7 +14,6 @@ namespace tests;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
-
 use PHPUnit\Framework\TestCase;
 
 abstract class GuiBase extends TestCase
@@ -40,6 +39,11 @@ abstract class GuiBase extends TestCase
 			\print_r($this->logs);
 			print_r(array_shift($t->getTrace()));
 		}
+		file_put_contents(ROOT_DIRECTORY . '/cache/logs/gui.txt', print_r([
+			333,
+			$t->__toString(),
+			$this->driver
+		], true), FILE_APPEND);
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 		print_r($this->driver->getPageSource());
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
@@ -52,8 +56,16 @@ abstract class GuiBase extends TestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
+		file_put_contents(ROOT_DIRECTORY . '/cache/logs/gui.txt', print_r([
+			111111,
+			null === $this->driver,
+		], true), FILE_APPEND);
 		if (null === $this->driver) {
 			$this->driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', DesiredCapabilities::chrome(), 5000);
+			file_put_contents(ROOT_DIRECTORY . '/cache/logs/gui.txt', print_r([
+				2222,
+				$this->driver,
+			], true), FILE_APPEND);
 		}
 		if (!self::$isLogin) {
 			$this->login();

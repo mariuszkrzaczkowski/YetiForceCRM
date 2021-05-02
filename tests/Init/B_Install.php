@@ -26,15 +26,4 @@ class B_Install extends \Tests\Base
 		$this->assertNotNull($schema->getTableSchema('yetiforce_updates'));
 		$this->assertTrue(((new \App\Db\Query())->from('vtiger_ws_fieldtype')->count()) > 0);
 	}
-
-	/**
-	 * Testing library downloads.
-	 */
-	public function testDownloadLibrary()
-	{
-		\Settings_ModuleManager_Library_Model::downloadAll();
-		foreach (\Settings_ModuleManager_Library_Model::$libraries as $name => $lib) {
-			$this->assertFileExists($lib['dir'] . 'version.php');
-		}
-	}
 }

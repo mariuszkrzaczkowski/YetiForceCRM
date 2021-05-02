@@ -18,7 +18,7 @@ if (!class_exists('Vtiger_WebUI')) {
 	require_once 'include/main/WebUI.php';
 }
 
-$installDatabase = false;
+$installDatabase = true;
 \App\Process::$requestMode = 'TEST';
 
 //fix phpunit console for windows

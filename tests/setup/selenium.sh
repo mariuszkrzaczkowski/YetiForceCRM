@@ -16,14 +16,14 @@ SELENIUM_SUBDIR=$(echo "$SELENIUM_STANDALONE_VERSION" | cut -d"." -f-2)
 
 # Install dependencies.
 echo '-- # Install dependencies. --'
-apt-get install -y --no-install-recommends openjdk-8-jre-headless xvfb xauth libxi6 libgconf-2-4
+apt-get -y install --no-install-recommends openjdk-8-jre-headless xvfb xauth libxi6 libgconf-2-4
 
 # Install Chrome.
 echo '-- # Install Chrome. --'
 curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
 echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
 apt-get -y update
-apt-get -y install google-chrome-stable
+apt-get -y install --no-install-recommends google-chrome-stable
 
 # Install ChromeDriver.
 echo '-- Install ChromeDriver. --'

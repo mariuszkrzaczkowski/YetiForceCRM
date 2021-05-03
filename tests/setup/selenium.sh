@@ -14,15 +14,22 @@ CHROME_DRIVER_VERSION=`curl -sS https://chromedriver.storage.googleapis.com/LATE
 SELENIUM_STANDALONE_VERSION=3.6.0
 SELENIUM_SUBDIR=$(echo "$SELENIUM_STANDALONE_VERSION" | cut -d"." -f-2)
 
-# Install dependencies.
-echo '-- # Install dependencies. --'
-apt-get -y install --no-install-recommends openjdk-8-jre-headless xvfb xauth libxi6 libgconf-2-4
+# Install sources.list.d.
+echo '-- # Install sources.list.d. --'
+apt-get -y install --no-install-recommends software-properties-common
 
-# Install Chrome.
-echo '-- # Install Chrome. --'
+wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
+add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
 echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
 apt-get -y update
+
+# Install dependencies.
+echo '-- # Install dependencies. --'
+apt-get -y install --no-install-recommends adoptopenjdk-8-openj9-jre xvfb xauth libxi6 libgconf-2-4
+
+# Install Chrome.
+echo '-- # Install Chrome. --'
 apt-get -y install --no-install-recommends google-chrome-stable
 
 # Install ChromeDriver.

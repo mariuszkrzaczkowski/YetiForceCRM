@@ -22,6 +22,7 @@ apt-get install -y --no-install-recommends openjdk-8-jre-headless xvfb xauth lib
 echo '-- # Install Chrome. --'
 curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
 echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+apt-get -y update
 apt-get -y install google-chrome-stable
 
 # Install ChromeDriver.
@@ -42,7 +43,7 @@ chmod 0755 /usr/local/bin/selenium-server-standalone.jar
 
 # Run Chrome via Selenium Server
 echo '-- # Run Chrome via Selenium Server --'
-xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar
+xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar > /var/www/html/cache/logs/selenium.log 2>&1 &
 #debug
 #xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar -debug
 echo '-- # chromedriver --url-base=/wd/hub --'

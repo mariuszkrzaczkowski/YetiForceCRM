@@ -50,13 +50,15 @@ echo '-- # Run Chrome via Selenium Server --'
 xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar > /var/www/html/cache/logs/selenium.log 2>&1 &
 #debug
 #xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar -debug
-echo '-- # chromedriver --url-base=/wd/hub --'
-chromedriver --url-base=/wd/hub
+#echo '-- # chromedriver --url-base=/wd/hub --'
+#chromedriver --url-base=/wd/hub
 
 
 #xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar $HOME/selenium-server-standalone.jar -debug > /tmp/selenium.log &
 
-wget --retry-connrefused --tries=60 --waitretry=1 --output-file=/dev/null $serverUrl/status -O /dev/null
+#echo '-- # $serverUrl/wd/hub/status --'
+wget --retry-connrefused --tries=60 --waitretry=1 --output-file=/dev/null $serverUrl/wd/hub/status -O /dev/null
+
 if [ ! $? -eq 0 ]; then
     echo " Selenium Server not started !!!"
 else

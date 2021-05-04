@@ -45,7 +45,11 @@ abstract class GuiBase extends TestCase
 			$this->driver
 		], true), FILE_APPEND);
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-		print_r($this->driver->getPageSource());
+		if (null !== $this->driver) {
+			print_r($this->driver->getPageSource());
+		} else {
+			echo 'No $this->driver';
+		}
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 		throw $t;
 	}

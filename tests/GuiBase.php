@@ -65,7 +65,10 @@ abstract class GuiBase extends TestCase
 			null === $this->driver,
 		], true), FILE_APPEND);
 		if (null === $this->driver) {
-			$this->driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', DesiredCapabilities::chrome(), 5000);
+			$capabilities = Facebook\WebDriver\Remote\DesiredCapabilities::chrome();
+			$capabilities->setCapability('chromeOptions', ['args' => ['headless', 'disable-dev-shm-usage', 'no-sandbox']]);
+	
+			$this->driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities, 5000);
 			file_put_contents(ROOT_DIRECTORY . '/cache/logs/gui.txt', print_r([
 				2222,
 				$this->driver,

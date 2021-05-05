@@ -60,19 +60,11 @@ abstract class GuiBase extends TestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
-		file_put_contents(ROOT_DIRECTORY . '/cache/logs/gui.txt', print_r([
-			111111,
-			null === $this->driver,
-		], true), FILE_APPEND);
 		if (null === $this->driver) {
-			$capabilities = Facebook\WebDriver\Remote\DesiredCapabilities::chrome();
+			$capabilities = DesiredCapabilities::chrome();
 			$capabilities->setCapability('chromeOptions', ['args' => ['headless', 'disable-dev-shm-usage', 'no-sandbox']]);
 	
 			$this->driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities, 5000);
-			file_put_contents(ROOT_DIRECTORY . '/cache/logs/gui.txt', print_r([
-				2222,
-				$this->driver,
-			], true), FILE_APPEND);
 		}
 		if (!self::$isLogin) {
 			$this->login();

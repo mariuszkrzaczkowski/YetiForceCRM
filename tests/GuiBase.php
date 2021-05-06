@@ -50,7 +50,7 @@ abstract class GuiBase extends TestCase
 			echo 'Title: ';
 			$this->driver->getTitle();
 			echo PHP_EOL;
-			file_put_contents(ROOT_DIRECTORY . '/cache/logs/selenium_source.png', $this->driver->getPageSource());
+			file_put_contents(ROOT_DIRECTORY . '/cache/logs/selenium_source.html', $this->driver->getPageSource());
 			$this->driver->takeScreenshot(ROOT_DIRECTORY . '/cache/logs/selenium_screenshot.png');
 		} else {
 			echo 'No $this->driver';
@@ -97,5 +97,6 @@ abstract class GuiBase extends TestCase
 		$this->driver->findElement(WebDriverBy::id('username'))->sendKeys('demo');
 		$this->driver->findElement(WebDriverBy::id('password'))->sendKeys(\Tests\Base\A_User::$defaultPassrowd);
 		$this->driver->findElement(WebDriverBy::tagName('form'))->submit();
+		$this->isLogin = true;
 	}
 }

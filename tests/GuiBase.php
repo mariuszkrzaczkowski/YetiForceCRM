@@ -22,10 +22,10 @@ abstract class GuiBase extends TestCase
 	public $logs;
 
 	/** @var \Facebook\WebDriver\Remote\RemoteWebDriver Web driver. */
-	protected static $driver;
+	protected $driver;
 
 	/** @var bool Is login */
-	protected static $isLogin = false;
+	protected $isLogin = false;
 
 	/**
 	 * Not success test.
@@ -43,17 +43,17 @@ abstract class GuiBase extends TestCase
 			\print_r($this->logs);
 		}
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-		if (null !== self::$driver) {
+		if (null !== $this->driver) {
 			echo 'URL: ';
-			self::$driver->getCurrentURL();
+			$this->driver->getCurrentURL();
 			echo PHP_EOL;
 			echo 'Title: ';
-			self::$driver->getTitle();
+			$this->driver->getTitle();
 			echo PHP_EOL;
-			file_put_contents(ROOT_DIRECTORY . '/cache/logs/selenium_source.png', self::$driver->getPageSource());
-			self::$driver->takeScreenshot(ROOT_DIRECTORY . '/cache/logs/selenium_screenshot.png');
+			file_put_contents(ROOT_DIRECTORY . '/cache/logs/selenium_source.png', $this->driver->getPageSource());
+			$this->driver->takeScreenshot(ROOT_DIRECTORY . '/cache/logs/selenium_screenshot.png');
 		} else {
-			echo 'No self::$driver';
+			echo 'No $this->driver';
 			print_r($t->__toString());
 		}
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
@@ -66,12 +66,12 @@ abstract class GuiBase extends TestCase
 	protected function setUp(): void
 	{
 		parent::setUp();
-		if (empty(self::$driver)) {
+		if (empty($this->driver)) {
 			$capabilities = DesiredCapabilities::chrome();
 			$capabilities->setCapability('chromeOptions', ['args' => ['headless', 'disable-dev-shm-usage', 'no-sandbox']]);
-			self::$driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities, 5000);
+			$this->driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities, 5000);
 		}
-		if (!self::$isLogin) {
+		if (!$this->isLogin) {
 			$this->login();
 		}
 	}
@@ -85,7 +85,7 @@ abstract class GuiBase extends TestCase
 	 */
 	public function url(string $url): void
 	{
-		self::$driver->get(\App\Config::main('site_URL') . $url);
+		$this->driver->get(\App\Config::main('site_URL') . $url);
 	}
 
 	/**
@@ -93,9 +93,9 @@ abstract class GuiBase extends TestCase
 	 */
 	public function login(): void
 	{
-		self::$driver->get(\App\Config::main('site_URL') . 'index.php?module=Users&view=Login');
-		self::$driver->findElement(WebDriverBy::id('username'))->sendKeys('demo');
-		self::$driver->findElement(WebDriverBy::id('password'))->sendKeys(\Tests\Base\A_User::$defaultPassrowd);
-		self::$driver->findElement(WebDriverBy::tagName('form'))->submit();
+		$this->driver->get(\App\Config::main('site_URL') . 'index.php?module=Users&view=Login');
+		$this->driver->findElement(WebDriverBy::id('username'))->sendKeys('demo');
+		$this->driver->findElement(WebDriverBy::id('password'))->sendKeys(\Tests\Base\A_User::$defaultPassrowd);
+		$this->driver->findElement(WebDriverBy::tagName('form'))->submit();
 	}
 }

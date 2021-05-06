@@ -14,7 +14,7 @@ use Facebook\WebDriver\WebDriverBy;
 
 class Gui_BackupManager extends \Tests\GuiBase
 {
-	protected static $isLogin = true;
+	protected $isLogin = true;
 	/**
 	 * Test directory.
 	 *
@@ -97,17 +97,17 @@ class Gui_BackupManager extends \Tests\GuiBase
 		$this->url('index.php?module=Backup&parent=Settings&view=Index');
 		$this->assertSame(
 			self::$catalogName,
-			self::$driver->findElement(WebDriverBy::cssSelector('.listViewContentDiv table:first-child td:first-child'))->getText(),
+			$this->driver->findElement(WebDriverBy::cssSelector('.listViewContentDiv table:first-child td:first-child'))->getText(),
 			'Catalog does not exist'
 		);
 		$this->assertSame(
 			self::$fileName,
-			self::$driver->findElement(WebDriverBy::cssSelector('.listViewContentDiv div:nth-child(2) td:first-child'))->getText(),
+			$this->driver->findElement(WebDriverBy::cssSelector('.listViewContentDiv div:nth-child(2) td:first-child'))->getText(),
 			'File does not exist'
 		);
 		$this->assertInstanceOf(
 			'\Facebook\WebDriver\Remote\RemoteWebDriver',
-			self::$driver->close(),
+			$this->driver->close(),
 			'Window close should return WebDriver object'
 		);
 	}

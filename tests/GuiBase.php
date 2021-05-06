@@ -39,7 +39,7 @@ abstract class GuiBase extends TestCase
 			\print_r($this->logs);
 		}
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-		print_r(array_shift($t->getTrace()));
+		print_r($t->getTrace());
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 		if (null !== $this->driver) {
 			echo 'URL: ';

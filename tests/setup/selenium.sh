@@ -19,20 +19,20 @@ echo '-- # Install sources.list.d. --'
 echo "deb http://security.debian.org/debian-security stretch/updates main" >> /etc/apt/sources.list.d/debian-security.list
 curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
 echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-apt-get -y update
+apt-get -y -q update
 
 # Install dependencies.
 echo '-- # Install dependencies. --'
-apt-get -y install --no-install-recommends openjdk-8-jre-headless xvfb xauth libxi6 libgconf-2-4
+apt-get -y -q install --no-install-recommends openjdk-8-jre-headless xvfb xauth libxi6 libgconf-2-4
 
 # Install Chrome.
 echo '-- # Install Chrome. --'
-apt-get -y install --no-install-recommends google-chrome-stable
+apt-get -y -q install --no-install-recommends google-chrome-stable
 
 # Install ChromeDriver.
 echo '-- Install ChromeDriver. --'
 wget -q -N https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/
-unzip ~/chromedriver_linux64.zip -d ~/
+unzip -q ~/chromedriver_linux64.zip -d ~/
 rm ~/chromedriver_linux64.zip
 mv -f ~/chromedriver /usr/local/bin/chromedriver
 chown root:root /usr/local/bin/chromedriver

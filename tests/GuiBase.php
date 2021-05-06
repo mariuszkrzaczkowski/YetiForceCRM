@@ -37,16 +37,20 @@ abstract class GuiBase extends TestCase
 		if (isset($this->logs)) {
 			echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 			\print_r($this->logs);
-			print_r(array_shift($t->getTrace()));
 		}
-		file_put_contents(ROOT_DIRECTORY . '/cache/logs/gui.txt', print_r([
-			333,
-			$t->__toString(),
-			$this->driver
-		], true), FILE_APPEND);
+		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+		print_r(array_shift($t->getTrace()));
 		echo "\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
 		if (null !== $this->driver) {
+			echo 'URL: ';
+			$this->driver->getCurrentURL();
+			echo 'Title: ';
+			$this->driver->getTitle();
+			echo PHP_EOL;
+			echo 'Source: ';
+			echo PHP_EOL;
 			print_r($this->driver->getPageSource());
+			$this->driver->takeScreenshot(ROOT_DIRECTORY . '/cache/logs/screenshot.png');
 		} else {
 			echo 'No $this->driver';
 		}
@@ -63,7 +67,7 @@ abstract class GuiBase extends TestCase
 		if (null === $this->driver) {
 			$capabilities = DesiredCapabilities::chrome();
 			$capabilities->setCapability('chromeOptions', ['args' => ['headless', 'disable-dev-shm-usage', 'no-sandbox']]);
-	
+
 			$this->driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities, 5000);
 		}
 		if (!self::$isLogin) {
